@@ -15,10 +15,15 @@ struct Detail: View {
     private let yellow:Color = Color("MyYellow")
     private var pickerEvent = ["Locations", "Vols"]
     @State private var location = "Locations"
-    @State private var vol = "Vol"
+    @State private var vol = "Vols"
     
     private var locationList = [
-        Location(image: "ImageSydney1", name: "Hotel", location: "centre vill", price: 234, numberBedR: 1, numberBathR: 1)
+        Location(image: "fourSeasons", name: "Four Seasons", location: "199 George Street, Sydney, NSW 2000", price: 234.99, numberBedR: 1, numberBathR: 1),
+        Location(image: "ImageSydney2", name: "Villa", location: "East avenu", price: 344.00, numberBedR: 2, numberBathR: 3)
+    ]
+    private var volList = [
+        Location(image: "ImageSydney2", name: "Paris -> Sydney", location: "centre ville", price: 234, numberBedR: 1, numberBathR: 1),
+        Location(image: "ImageSydney3", name: "Paris -> Sydney", location: "centre ville", price: 123, numberBedR: 1, numberBathR: 1)
     ]
     
     var body: some View {
@@ -33,11 +38,68 @@ struct Detail: View {
                 
                 //Récupération de la liste des locations/hotels
                 Picker("Event", selection: $location) {
-                    HStack {
-//                        Image("ImageSydney1")
-//                            .resizable()
-//                            .frame(width: 100, height: 100)
-                        Text("Hello")
+                    ForEach(pickerEvent, id: \.self) { location in
+                            Text(location)
+                                .font(.largeTitle)
+                    }
+                    
+                }.pickerStyle(.segmented)
+                    .padding()
+                VStack(alignment: .leading) {
+                    if location == "Locations" {
+                        ForEach(locationList) { listLocation in
+                            HStack {
+                                Image(listLocation.image)
+                                    .resizable()
+                                    .frame(width: 120, height: 120)
+                                VStack(alignment: .leading) {
+                                    Text(listLocation.name)
+                                        .font(.headline)
+                                    Text(listLocation.location)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                    HStack {
+                                        Image(systemName: "bed.double.fill")
+                                        Text("\(listLocation.numberBedR)")
+                                    }.font(.system(size: 15))
+                                    HStack {
+                                        Image(systemName: "shower.fill")
+                                        Text("\(listLocation.numberBathR) ")
+                                    }.font(.system(size: 15))
+                                        .padding(.leading,6)
+                                    HStack {
+                                        Text("\(listLocation.price, specifier: "%.2f")€")
+                                            .font(.headline)
+                                        Text("/nuit pour deux")
+                                            .font(.system(size: 10))
+                                    }.padding(.top, 1)
+                                }
+                                Spacer()
+                                HStack {
+                                    Link("Louer",
+                                         destination: URL(string: "https://www.google.fr")!)
+                                    .padding(10)
+                                    .background(Color("MyBlue"))
+                                    .foregroundColor(.white)
+                                .cornerRadius(10)
+                                }
+                                
+                                Spacer()
+                            }.padding(.leading, 20)
+                        }
+                        
+                    } else if vol == "Vols" {
+                        ForEach(volList) { listVol in
+                            HStack {
+                                Image(listVol.image)
+                                    .resizable()
+                                    .frame(width: 70, height: 70)
+                                Text(listVol.name)
+                                    .font(.title)
+                            }
+                        }
+                    } else {
+                        Text("Aucun bon plan existant")
                     }
 
                 }
@@ -53,27 +115,12 @@ struct Detail_Previews: PreviewProvider {
 }
 
 
-// Permet d'afficher la liste des locations ou hôtel proposer sur la destination
-
-//faire un picker pour ajouter la liste des locations/hotel et les vols
-struct LocationRow {
-    
-    var location: Location
-    
-    var body: some View {
-        HStack {
-            Image(location.image)
-            Text(location.name)
-        }
-    }
-}
-
 struct Location: Identifiable {
     var id = UUID()
     var image: String
     var name: String
     var location: String
-    var price: Double
+    var price: Float
     var numberBedR: Int
     var numberBathR: Int
 }
@@ -86,3 +133,13 @@ struct Location: Identifiable {
 /**Link(destination: URL(string: "https://developer.apple.com/xcode/swiftui/")!) {
  Label("Share", systemImage: "link.circle.fill")
  }*/
+
+
+//VStack(alignment: .center) {
+//    Link("Louer",
+//         destination: URL(string: "https://www.google.fr")!)
+//    .padding(10)
+//    .background(Color("MyBlue"))
+//    .foregroundColor(.white)
+//    .cornerRadius(10)
+//}

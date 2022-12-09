@@ -94,7 +94,7 @@ struct DetailInformation: View {
                     Circle()
                         .fill(buttonIcons == 3 ? Color("MyOrange") : Color("MyBlue"))
                         .frame(width: 40, height: 40)
-                    Image(systemName: "checkmark.shield.fill")
+                    Image(systemName: "cloud.sun.rain.fill")
                         .foregroundColor(.white)
                         .symbolRenderingMode(.multicolor)
                 }
@@ -181,10 +181,7 @@ struct DetailInformation: View {
                                         .padding([.leading, .top], 10)
                                     Spacer()
                                 }
-                                
                                 Spacer()
-                                
-                                
                             }
                         }
                 }
