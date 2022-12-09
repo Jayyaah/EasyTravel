@@ -18,12 +18,12 @@ struct Detail: View {
     @State private var vol = "Vols"
     
     private var locationList = [
-        Location(image: "fourSeasons", name: "Four Seasons", location: "199 George Street, Sydney, NSW 2000", price: 234.99, numberBedR: 1, numberBathR: 1),
-        Location(image: "ImageSydney2", name: "Villa", location: "East avenu", price: 344.00, numberBedR: 2, numberBathR: 3)
+        Location(image: "fourSeasons", name: "Four Seasons", location: "199 George Street, Sydney, NSW 2000", price: 353, numberBedR: 1, numberBathR: 1, url: "https://www.booking.com/Share-AGxvU7"),
+        Location(image: "ImageSydney2", name: "Fairfield Heights", location: "Fairfield Heights, Sydney, Australie", price: 134, numberBedR: 3, numberBathR: 1, url: "https://www.abritel.fr/location-vacances/p2595909vb?adultsCount=2&noDates=true&uni_id=3166326")
     ]
     private var volList = [
-        Location(image: "ImageSydney2", name: "Paris -> Sydney", location: "centre ville", price: 234, numberBedR: 1, numberBathR: 1),
-        Location(image: "ImageSydney3", name: "Paris -> Sydney", location: "centre ville", price: 123, numberBedR: 1, numberBathR: 1)
+        Location(image: "ImageSydney2", name: "Paris -> Sydney", location: "centre ville", price: 234, numberBedR: 1, numberBathR: 1, url: "https://www.google.fr"),
+        Location(image: "ImageSydney3", name: "Paris -> Sydney", location: "centre ville", price: 123, numberBedR: 1, numberBathR: 1, url: "https://www.google.fr")
     ]
     
     var body: some View {
@@ -48,6 +48,7 @@ struct Detail: View {
                 VStack(alignment: .leading) {
                     if location == "Locations" {
                         ForEach(locationList) { listLocation in
+                            //Affichage de la liste des différentes locations/hôtels proposé dans la zone de la destination
                             HStack {
                                 Image(listLocation.image)
                                     .resizable()
@@ -70,14 +71,15 @@ struct Detail: View {
                                     HStack {
                                         Text("\(listLocation.price, specifier: "%.2f")€")
                                             .font(.headline)
-                                        Text("/nuit pour deux")
-                                            .font(.system(size: 10))
+                                        Text("/ nuit")
+                                            .font(.system(size: 15))
                                     }.padding(.top, 1)
                                 }
                                 Spacer()
+                                //Bouton louer qui permet d'être redirigé vers le site de location
                                 HStack {
                                     Link("Louer",
-                                         destination: URL(string: "https://www.google.fr")!)
+                                         destination: URL(string: listLocation.url)!)
                                     .padding(10)
                                     .background(Color("MyBlue"))
                                     .foregroundColor(.white)
@@ -90,6 +92,7 @@ struct Detail: View {
                         
                     } else if vol == "Vols" {
                         ForEach(volList) { listVol in
+                            //Affichage de la liste des différentes locations/hôtels proposé dans la zone de la destination
                             HStack {
                                 Image(listVol.image)
                                     .resizable()
@@ -114,7 +117,7 @@ struct Detail_Previews: PreviewProvider {
     }
 }
 
-
+//Permet de recupérer les différentes informations de locations/hôtel sur la destination
 struct Location: Identifiable {
     var id = UUID()
     var image: String
@@ -123,23 +126,21 @@ struct Location: Identifiable {
     var price: Float
     var numberBedR: Int
     var numberBathR: Int
+    var url: String
 }
 
 
+//Permet de récupérer les différentes informations concernant les vols disponible pour ce rendre à la destination
+struct Vol: Identifiable {
+    var id = UUID()
+    var logoCompagnyDeparture: String
+    var logoCompagnyArrival: String
+    var departure: String
+    var arrival: String
+    var compagny: String
+    var price: Double
+    var departureHours: String
+    var arrivalHours: String
+}
+
 // faire ajout favoris et ajout déjà visité
-
-
-
-/**Link(destination: URL(string: "https://developer.apple.com/xcode/swiftui/")!) {
- Label("Share", systemImage: "link.circle.fill")
- }*/
-
-
-//VStack(alignment: .center) {
-//    Link("Louer",
-//         destination: URL(string: "https://www.google.fr")!)
-//    .padding(10)
-//    .background(Color("MyBlue"))
-//    .foregroundColor(.white)
-//    .cornerRadius(10)
-//}

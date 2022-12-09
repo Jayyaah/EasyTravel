@@ -22,7 +22,7 @@ struct DetailInformation: View {
     var descriptionIconCost: String
     var descriptionIconSecurity: String
     var descriptionIconWeather: String
-    
+    @State var test = ""
     var description: String
     
     @State var isClicked: Bool =  false
@@ -35,21 +35,22 @@ struct DetailInformation: View {
             //Nom de la destination
             HStack {
                 Text(title)
-            }.font(.title)
+            }.font(.title).bold().foregroundColor(Color("MyOrange"))
             
             ScrollView(.horizontal, showsIndicators: false) {
                 
                 //Affichage des images
                 HStack {
-                    //                    TabView {
+                    TabView(selection: $test) {
                     
-                    ForEach(arrayImages, id: \.self) { num in
-                        Image(num)
-                            .resizable()
-                        //                                .scaledToFill()
-                            .frame(width: 360, height: 250)
-                    }
-                    //                    }.tabViewStyle(PageTabViewStyle())
+                        ForEach(arrayImages, id: \.self) { num in
+                            Image(num)
+                                .resizable()
+                                .scaledToFill()
+                        }
+                    }.tabViewStyle(.page)
+                        .frame(width: 360, height: 250)
+                        .padding()
                 }
             }
             
