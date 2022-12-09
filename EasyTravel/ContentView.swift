@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    private let orange:Color = Color("MyOrange")
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-        }
-        .padding()
+        
+            TabView {
+                Text("")
+                    .tabItem {
+                        Image(systemName: "checklist")
+                        Text("Quizz")
+                    }
+                Text("")
+                    .tabItem {
+                        Image(systemName: "heart.fill")
+                        Text("Favoris")
+                    }.accentColor(orange)
+                Text("")
+                    .tabItem {
+                        Image(systemName: "airplane")
+                        Text("Mes Voyages")
+                    }
+            }.accentColor(orange)
     }
 }
 
