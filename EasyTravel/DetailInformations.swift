@@ -188,15 +188,13 @@ struct DetailInformation: View {
                 }
                 
             }
-            .padding()
+            .padding(.top, 8)
             
             // VStack description sur la destination
             VStack(alignment: .leading) {
-                Text("Description")
-                    .font(.title3).bold()
-                    .padding(.vertical)
                 Text(description)
-            }
+                    
+            }.padding(.horizontal, 10)
         }
         .onTapGesture {
             buttonIcons = 4

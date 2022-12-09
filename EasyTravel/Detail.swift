@@ -22,8 +22,8 @@ struct Detail: View {
         Location(image: "ImageSydney2", name: "Fairfield Heights", location: "Fairfield Heights, Sydney, Australie", price: 134, numberBedR: 3, numberBathR: 1, url: "https://www.abritel.fr/location-vacances/p2595909vb?adultsCount=2&noDates=true&uni_id=3166326")
     ]
     private var volList = [
-        Location(image: "ImageSydney2", name: "Paris -> Sydney", location: "centre ville", price: 234, numberBedR: 1, numberBathR: 1, url: "https://www.google.fr"),
-        Location(image: "ImageSydney3", name: "Paris -> Sydney", location: "centre ville", price: 123, numberBedR: 1, numberBathR: 1, url: "https://www.google.fr")
+        Vol(logoCompagnyDeparture: "AF", logoCompagnyArrival: "AF", departure: "Paris", arrival: "Sydney", compagny: "AirFrance", price: 123, departureHours: "18:03", arrivalHours: "19:27 +1"),
+        Vol(logoCompagnyDeparture: "", logoCompagnyArrival: "", departure: "Paris", arrival: "Sydney", compagny: "AirFrance", price: 123, departureHours: "18h", arrivalHours: "19h +1")
     ]
     
     var body: some View {
@@ -94,11 +94,20 @@ struct Detail: View {
                         ForEach(volList) { listVol in
                             //Affichage de la liste des différentes locations/hôtels proposé dans la zone de la destination
                             HStack {
-                                Image(listVol.image)
+                                Image(listVol.logoCompagnyDeparture)
                                     .resizable()
-                                    .frame(width: 70, height: 70)
-                                Text(listVol.name)
-                                    .font(.title)
+                                .frame(width: 30, height: 30)
+                                VStack {
+                                    Text(listVol.departureHours)
+                                        .bold()
+                                    Text(listVol.departure)
+                                }
+                                
+                                Image(systemName: "airplane.departure")
+                                Image(systemName: "line.diagonal")
+                                    .rotationEffect(Angle(degrees: 45))
+                                Image(systemName: "airplane.arrival")
+                                
                             }
                         }
                     } else {
