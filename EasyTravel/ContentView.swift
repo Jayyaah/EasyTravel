@@ -13,12 +13,12 @@ struct ContentView: View {
     var body: some View {
         
             TabView {
-                Text("")
+                Suggestions()
                     .tabItem {
                         Image(systemName: "checklist")
                         Text("Quizz")
                     }
-                Text("")
+                Favorites()
                     .tabItem {
                         Image(systemName: "heart.fill")
                         Text("Favoris")
