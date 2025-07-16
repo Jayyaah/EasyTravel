@@ -1,32 +1,43 @@
-# 🧳 EasyTravel
+# 🌍 EasyTravel
 
-> 📱 Application iOS réalisée dans le cadre d'une formation d'initiation à Swift chez **Simplon.co**  
-> 📆 Période : **novembre 2022 – décembre 2022**
-
----
-
-## ✨ Présentation
-
-**EasyTravel** est un prototype d'application mobile de voyage, développé avec **SwiftUI**.  
-L'app permet à l'utilisateur de découvrir des destinations personnalisées via un **quizz interactif** ou de planifier son voyage manuellement.
+**Projet iOS – SwiftUI**  
+📆 **Novembre 2022 – Décembre 2022**  
+🎓 Réalisé dans le cadre de la formation "Initiation à Swift" chez **Simplon.co**.
 
 ---
 
-## 🎯 Fonctionnalités principales
+## ✈️ Description
 
-- 🎲 **Mode "Surprenez-moi"** : quizz pour proposer des destinations adaptées à l’utilisateur
-- 🗓️ **Mode "Je maîtrise"** : sélection manuelle des préférences (dates, lieux, budget)
-- ❤️ **Favoris** : ajout de destinations préférées
-- 🛫 **Mes voyages** : visualisation des voyages planifiés
-- ✈️ **Suggestions personnalisées** en fonction des réponses
+**EasyTravel** est un prototype d'application iOS permettant aux utilisateurs de découvrir des destinations de voyage adaptées à leurs préférences.
+
+L'utilisateur répond à un quiz simple, et l'application lui propose ensuite une sélection de destinations avec :
+
+- Des informations complètes (prix, images, description)
+- Des conseils pratiques (climat, sécurité, santé, etc.)
+- Des liens vers des réservations de vols et d'hébergements
+
+---
+
+## ⚙️ Fonctionnalités
+
+- 🎯 **Quiz de préférences** pour filtrer les destinations
+- 📋 **Fiche détaillée** pour chaque destination
+- 🛫 **Vols** : horaires, compagnies, prix, lien de réservation
+- 🏨 **Hébergements** : nom, adresse, prix, lien de réservation
+- 📊 **Indicateur de pertinence** des suggestions
 
 ---
 
-## 🛠️ Technologies utilisées
+## 🧑‍💻 Stack technique
 
-- 🧠 Swift / SwiftUI
-- 🧩 Architecture modulaire en vues SwiftUI
-- 🎨 Utilisation de `NavigationView`, `TabView`, `Button`, `NavigationLink`, etc.
-- 🎛️ Design responsive & dynamique avec gestion d'état (`@State`)
+- Swift
+- SwiftUI
+- Xcode
 
 ---
+
+## 👩‍💻 Réalisé par
+
+**Valentine, Marlène, Pascal, Lassana et Nathanael**  
+Apprenante chez Simplon.co  
+Initiation au développement iOS avec Swift
