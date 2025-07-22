@@ -11,6 +11,14 @@
 		A32B9761293F5FBC00581B55 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32B9760293F5FBC00581B55 /* ContentView.swift */; };
 		A32B9763293F5FBD00581B55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A32B9762293F5FBD00581B55 /* Assets.xcassets */; };
 		A32B9766293F5FBD00581B55 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A32B9765293F5FBD00581B55 /* Preview Assets.xcassets */; };
+		A35D87352E3025480003730C /* quizPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D87342E3025370003730C /* quizPage.swift */; };
+		A35D87372E30256B0003730C /* buttonEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D87362E3025610003730C /* buttonEffect.swift */; };
+		A35D87392E30258A0003730C /* quizEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D87382E3025850003730C /* quizEffect.swift */; };
+		A35D873B2E3025A30003730C /* myJourneyVisited.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D873A2E30259C0003730C /* myJourneyVisited.swift */; };
+		A35D873E2E3025CC0003730C /* Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D873D2E3025CC0003730C /* Details.swift */; };
+		A35D87402E3025E50003730C /* DetailIformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D873F2E3025DF0003730C /* DetailIformation.swift */; };
+		A35D87422E3025F90003730C /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D87412E3025F50003730C /* Favorite.swift */; };
+		A35D87442E30260E0003730C /* suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35D87432E30260B0003730C /* suggestion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +27,14 @@
 		A32B9760293F5FBC00581B55 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A32B9762293F5FBD00581B55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A32B9765293F5FBD00581B55 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A35D87342E3025370003730C /* quizPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quizPage.swift; sourceTree = "<group>"; };
+		A35D87362E3025610003730C /* buttonEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonEffect.swift; sourceTree = "<group>"; };
+		A35D87382E3025850003730C /* quizEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quizEffect.swift; sourceTree = "<group>"; };
+		A35D873A2E30259C0003730C /* myJourneyVisited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myJourneyVisited.swift; sourceTree = "<group>"; };
+		A35D873D2E3025CC0003730C /* Details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Details.swift; sourceTree = "<group>"; };
+		A35D873F2E3025DF0003730C /* DetailIformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIformation.swift; sourceTree = "<group>"; };
+		A35D87412E3025F50003730C /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		A35D87432E30260B0003730C /* suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = suggestion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +67,14 @@
 		A32B975D293F5FBC00581B55 /* EasyTravel */ = {
 			isa = PBXGroup;
 			children = (
+				A35D873A2E30259C0003730C /* myJourneyVisited.swift */,
+				A35D873D2E3025CC0003730C /* Details.swift */,
+				A35D873F2E3025DF0003730C /* DetailIformation.swift */,
+				A35D87412E3025F50003730C /* Favorite.swift */,
+				A35D87432E30260B0003730C /* suggestion.swift */,
+				A35D87382E3025850003730C /* quizEffect.swift */,
+				A35D87362E3025610003730C /* buttonEffect.swift */,
+				A35D87342E3025370003730C /* quizPage.swift */,
 				A32B975E293F5FBC00581B55 /* EasyTravelApp.swift */,
 				A32B9760293F5FBC00581B55 /* ContentView.swift */,
 				A32B9762293F5FBD00581B55 /* Assets.xcassets */,
@@ -139,6 +163,14 @@
 			files = (
 				A32B9761293F5FBC00581B55 /* ContentView.swift in Sources */,
 				A32B975F293F5FBC00581B55 /* EasyTravelApp.swift in Sources */,
+				A35D87372E30256B0003730C /* buttonEffect.swift in Sources */,
+				A35D87352E3025480003730C /* quizPage.swift in Sources */,
+				A35D87402E3025E50003730C /* DetailIformation.swift in Sources */,
+				A35D873E2E3025CC0003730C /* Details.swift in Sources */,
+				A35D87422E3025F90003730C /* Favorite.swift in Sources */,
+				A35D87392E30258A0003730C /* quizEffect.swift in Sources */,
+				A35D873B2E3025A30003730C /* myJourneyVisited.swift in Sources */,
+				A35D87442E30260E0003730C /* suggestion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

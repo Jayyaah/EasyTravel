@@ -1,12 +1,4 @@
 //
-//  Detail 2.swift
-//  EasyTravel
-//
-//  Created by Valentine on 22/07/2025.
-//
-
-
-//
 //  Detail.swift
 //  EasyTravel
 //

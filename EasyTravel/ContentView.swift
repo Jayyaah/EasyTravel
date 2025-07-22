@@ -1,21 +1,38 @@
 //
 //  ContentView.swift
-//  EasyTravel
+//  Voyage
 //
-//  Created by Valentine on 06/12/2022.
+//  Created by Pascal Cusset on 01/12/2022.
 //
 
 import SwiftUI
 
 struct ContentView: View {
+    @State private var changeView = 0
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            if changeView == 0 {
+                ProjetVoyageAppMobile(firstVue: $changeView)
+            } else {
+                TabView {
+                    
+                    //                        .tabItem {
+                    //                            Label("Quizz", systemImage: "checklist.checked")}
+                    Suggestions(returnToQuizz: $changeView)
+                        .tabItem {
+                            Label("Suggestions", systemImage: "tray.and.arrow.down.fill")}
+                    Favoris()
+                        .tabItem {
+                            Label("Favoris", systemImage: "heart.fill")}
+                    MesVoyagesVisites()
+                        .tabItem {
+                            Label("Mes voyages", systemImage: "airplane") }
+                }.accentColor(.orange) // Fin TabView
+            }
         }
-        .padding()
+        
+        
+        //    .padding()
     }
 }
 
