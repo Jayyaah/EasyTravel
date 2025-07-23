@@ -16,13 +16,17 @@ struct ProjetVoyageAppMobile: View {
                     //                    Spacer()
                     Image("LOGO")
                         .resizable()
-                        .frame(width: 200, height: 200)
-                    Text(" EasyTravel")
-                        .padding(.bottom, 60)
+                        .frame(width: 100, height: 100)
+                        .padding()
+                    Text("Choississez une aventure")
+                        .bold(true)
+                        .font(.title)
+                        .padding(30)
                     //                    Spacer()
                     VStack(spacing: 40) {
                         NavigationLink(destination: IsClicQuiz( secondVue: $firstVue), label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
                             Text("Suprenez-moi")
+                                .frame(maxWidth: 300)
                                 .foregroundColor(Color("MyBlue"))
                                 .padding(35)
                                 .background(Color("MyYellow"))
@@ -31,6 +35,7 @@ struct ProjetVoyageAppMobile: View {
                         
                         NavigationLink(destination: Jemaitrise(), label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
                             Text("Je maîtrise")
+                                .frame(maxWidth: 300)
                                 .foregroundColor(.white)
                                 .padding(35)
                                 .background(Color("MyBlue"))
