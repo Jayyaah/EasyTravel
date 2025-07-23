@@ -10,21 +10,21 @@ import SwiftUI
 
 struct ZoneClickable: View {
     let text: String
-    @State var changeColor: Bool = false
+    var onTap: (() -> Void)? = nil
+    @State private var changeColor: Bool = false
+
     var body: some View {
-        
-      
         Button(action: {
             changeColor.toggle()
-            
-        }, label: {
+            onTap?() // Appelle la fonction externe si elle existe
+        }) {
             Text(text)
-        })
-        .frame(maxWidth: 300)
-        .padding()
-        .background(changeColor == true ? (Color("MyYellow")) : (Color("MyBlue")))
-        .foregroundColor(changeColor == true ? (Color("MyBlue")) : (Color(.white)))
-        .cornerRadius(10)
+                .frame(maxWidth: 300)
+                .padding()
+                .background(changeColor ? Color("MyYellow") : Color("MyBlue"))
+                .foregroundColor(changeColor ? Color("MyBlue") : .white)
+                .cornerRadius(10)
+        }
     }
 }
 

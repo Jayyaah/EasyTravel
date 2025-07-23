@@ -15,9 +15,7 @@ struct IsClicQuiz: View {
     @Binding var secondVue: Int
     
     var body: some View {
-        //        NavigationView{
         VStack(spacing : 50){
-            //                Image("LOGO")
             Text("Quel est ton délire ?")
                 .font(.largeTitle)
                 .padding(.bottom, 50)
@@ -26,12 +24,12 @@ struct IsClicQuiz: View {
                     self.buttonSelected = button
                 }) {
                     Text("\(self.buttons[button])")
-                        .frame(maxWidth: 300)
+                        .frame(maxWidth: 300, maxHeight: 20)
                         .font(.title2)
                         .padding()
                         .foregroundColor(buttonSelected == button ? Color.white : Color.white)
                         .background(buttonSelected == button ? Color("MyOrange"): Color("MyBlue")  )
-                        .clipShape(Capsule())
+                        .cornerRadius(10)
                     
                 }
                 
@@ -39,16 +37,15 @@ struct IsClicQuiz: View {
             
             NavigationLink(destination: Quiz1(thirdView: $secondVue), label: {
                 Text("Suivant")
-                    .frame(maxWidth: 300)
+                    .frame(maxWidth: 300, maxHeight: 20)
                     .font(.title2)
                     .foregroundColor(Color("MyBlue"))
                     .padding(20)
                     .background(Color("MyYellow"))
-                    .clipShape(Capsule())
+                    .cornerRadius(10)
             })
             .navigationTitle("Surprenez-moi !")
         }
-        //            }
     }
 }
 

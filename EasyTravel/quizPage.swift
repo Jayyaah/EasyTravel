@@ -55,91 +55,102 @@ struct ProjetVoyageAppMobile: View {
     }
 }
 
-
-//struct quiz: View{
-//
-//    let buttons = ["Pieds dans l'eau", "Bataille de neige", "Randonnée"]//quiz1
-//
-//
-//    @State public var buttonSelected: Int?
-//    @State private var changeColor: Bool = false
-//
-//    var body: some View {
-//        //        NavigationView{
-//        VStack(spacing: 50){
-//            Text("Quel est ton délire ?")
-//                .font(.largeTitle)
-//                .padding(.bottom, 50)
-//            ForEach(0..<buttons.count, id:\.self) { button in
-//                Button(action: {
-//                    self.buttonSelected = button })
-//                {
-//                    Text("\(self.buttons[button])")
-//                        .padding(20)
-//                        .foregroundColor(buttonSelected == button ? Color.white : Color("MyBlue"))
-//                        .background(buttonSelected == button ? Color("MyBlue") : Color("MyYellow") )
-//                        .clipShape(Capsule())
-//                }
-//            }
-//            .navigationTitle("Surprenez-moi !")
-//        }
-//        Spacer(minLength: 30)
-//        NavigationLink(destination: Quiz1(), label: {
-//            Text("Suivant")
-//                .foregroundColor(Color("MyBlue"))
-//                .background(Color("MyYellow"))
-//                .font(.largeTitle)
-//                .clipShape(Capsule())
-//        })
-//        //        }
-//    }
-//}
-
 struct Jemaitrise: View {
     @State var toto = 0
     @State var color = Color.white
+    @State private var showDatePicker = false // Pour le picker Date
+    @State private var selectedDate = Date() //Pour la date selectionnée
+    @State private var selectedPeople = 1
+    let peopleOptions = Array(1...20) // selection du nombre de personnes allant de 1 à 20 personnes
+    @State private var selectedCountry = "Europe"
+    let countries = ["Amérique", "Europe", "Asie", "Afrique", "Océanie"]
+    @State private var selectedHome = "Hôtel"
+    let homes = ["Hôtel", "Maison", "Villa", "Appartement","Camping"]
+    @State private var selectedBudget = 500
+    let budgetOptions = Array(500...2000)
+    
     var body: some View {
         VStack{
             Image("LOGO")
+                .resizable()
+                .frame(width: 100, height: 100)
+            
             Text("Selectionnez vos dates de voyage")
-            HStack{
-                ZoneClickable(text: "Jour")
-                ZoneClickable(text: "Mois")
-                ZoneClickable(text: "Nombre de personnes")
+            HStack {
+                ZoneClickable(text: selectedDate.formatted(date: .abbreviated, time: .omitted)) {
+                    withAnimation {
+                        showDatePicker.toggle()
+                    }
+                }
+                Menu {
+                    Picker("Nombre de personnes", selection: $selectedPeople) {
+                        ForEach(peopleOptions, id: \.self) { number in
+                            Text("\(number) personne\(number > 1 ? "s" : "")")
+                                .tag(number)
+                        }
+                    }
+                } label: {
+                    ZoneClickable(text: "\(selectedPeople) personne\(selectedPeople > 1 ? "s" : "")")
+                }
             }
+            .padding(.horizontal)
+            
+            if showDatePicker {
+                DatePicker(
+                    "",
+                    selection: $selectedDate,
+                    displayedComponents: [.date]
+                )
+                .datePickerStyle(.wheel)
+                .labelsHidden()
+                .transition(.opacity)
+                .padding(.horizontal)
+            }
+            
             Text("Selectionnez le lieu de votre sejour")//permettre la selection de pays dans une liste
             HStack{
-                
-                ZoneClickable(text: "Amerique")
-                ZoneClickable(text: "Europe")
-                ZoneClickable(text: "Le monde entier")
+                Menu {
+                    Picker("Destination", selection: $selectedCountry) {
+                        ForEach(countries, id: \.self) { country in
+                            Text(country).tag(country)
+                        }
+                    }
+                } label: {
+                    ZoneClickable(text: selectedCountry)
+                }
             }
+            
             Text("Selectionnez le lieu de votre residence")//faire un two-way Binding : qui me permet d'envoyer une info et de la récupérer visuellement. ici récupérer des chiffres
             HStack{
-                ZoneClickable(text: "Hotel")
-                ZoneClickable(text: "Maison hote")
-                ZoneClickable(text: "Appartement Maison")
+                Menu {
+                    Picker("Home", selection: $selectedHome) {
+                        ForEach(homes, id: \.self) { home in
+                            Text(home).tag(home)
+                        }
+                    }
+                } label: {
+                    ZoneClickable(text: selectedHome)
+                }
             }
+            
             Text("Quel est votre budget ?")
             HStack{
-                ZoneClickable(text: "- de 1000€")
-                ZoneClickable(text: "- de 3000€")
-                ZoneClickable(text: "+ 5000€")
+                Menu {
+                    Picker("Budget", selection: $selectedBudget) {
+                        ForEach(budgetOptions, id: \.self) { number in
+                            Text("\(number) €")
+                        }
+                    }
+                } label: {
+                    ZoneClickable(text: "\(selectedBudget) €")
+                }
                 
             }
             .padding(9)
             
             
-            Button(action :{//redirection partie Lassana
-                Suggestions(returnToQuizz: $toto)
-            }, label:{
-                Text("C'est parti !")
-                    .foregroundColor(.red)
-                    .padding(30)
-                    .background(.mint)
-                    .cornerRadius(10)
-                
-            })
+            ZoneClickable(text: "Cest parti !")
+                .colorInvert()
         }
         .navigationTitle("Je maîtrise !")
     }
@@ -155,9 +166,7 @@ struct Quiz1: View {
     @State private var changeColor: Bool = false
     @Binding var thirdView: Int
     var body: some View {
-        //        NavigationView{
         VStack(spacing : 50){
-            //            Image("LOGO")
             Text("Où veux-tu chiller ?")
                 .font(.largeTitle)
                 .padding(.bottom, 50)
@@ -171,12 +180,9 @@ struct Quiz1: View {
                         .foregroundColor(buttonSelected == button ? Color.white : Color.white)
                         .background(buttonSelected == button ? Color("MyOrange"): Color("MyBlue") )
                         .clipShape(Capsule())
-                    
                 }
-                
                 .navigationTitle("Surprenez-moi !")
             }
-            
             NavigationLink(destination: Quiz2(fourthView: $thirdView), label: {
                 Text("Suivant")
                     .font(.title2)
@@ -198,9 +204,7 @@ struct Quiz2: View{
     @State private var changeColor: Bool = false
     @Binding var fourthView: Int
     var body: some View {
-        //NavigationView{
         VStack(spacing : 50){
-            //            Image("LOGO")
             Text("Quand veux-tu partir ?")
                 .font(.largeTitle)
                 .padding(.horizontal)
@@ -213,8 +217,6 @@ struct Quiz2: View{
                 }) {
                     Text("\(self.buttons[button])")
                         .padding()
-                    //.foregroundColor(buttonSelected == button ? Color.white : Color("MyBlue"))
-                    //.background(buttonSelected == button ? Color("MyBlue") : Color("MyOrange")  )
                         .foregroundColor(buttonSelected == button ? Color.black : Color.black)
                         .background(buttonSelected == button ? Color.white: Color.white )
                         .clipShape(Capsule())
@@ -238,8 +240,6 @@ struct Quiz2: View{
             })
         }
     }
-    
-    // }
 }
 
 struct Quiz3: View {
@@ -249,11 +249,7 @@ struct Quiz3: View {
     @State private var changeColor: Bool = false
     @Binding var fifthView: Int
     var body: some View {
-        //NavigationView{
         VStack(spacing : 50){
-            
-            
-            //            Image("LOGO")
             Text("Combien tu as ?")
                 .font(.largeTitle)
                 .padding(.bottom, 50)
@@ -273,27 +269,13 @@ struct Quiz3: View {
             Button("C'est parti !", action: {
                 fifthView = 1
             })
-            //            NavigationLink(destination: Suggestions(), label: {
-            //redirection lassana
             .font(.title2)
             .foregroundColor(Color("MyBlue"))
             .padding(20)
             .background(Color("MyYellow"))
             .clipShape(Capsule())
-            
-            //            })
-            
-        
         }
-        
-        /*ZStack {
-                     Image("JeromeNew")
-                         .resizable()
-                         .offset(x:60 ,y:200)
-                     .frame(width:170 , height:270 )
-                 }*/
     }
-    // }
 }
 
 struct ProjetVoyageAppMobile_Previews: PreviewProvider {
