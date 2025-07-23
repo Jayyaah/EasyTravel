@@ -23,9 +23,6 @@ struct DetailInformation: View {
     //var title: String
     //    var arrayImages = ["ImageSydney2", "ImageSydney1", "ImageSydney3", "ImageSydney4"]
     var arrayIcons = ["checkmark.shield.fill","dollarsign","cross.fill","cloud.sun.rain.fill"]
-    //    var arrayDetail = [
-    //        DetailRow(title: "Sydney, Australie", descriptionIconHealth: "Aucun vaccin exigé pour débarquer sur le sol australien. Il est simplement recommandé d’être à jour dans ses vaccinations « universelles » : diphtérie, tétanos, polio, coqueluche, rougeole, oreillons, hépatite B.", descriptionIconCost: "Si vous faites vos courses au supermarché, vous pouvez vous en sortir pour 20 AU$ (13 €) par personne et par jour.La taxe sur les biens et les services (goods and services tax, GST) est de 10 %. Elle est incluse dans les prix affichés (c’est la loi). ", descriptionIconSecurity: "Aucun vaccin exigé pour débarquer sur le sol australien. Il est simplement recommandé d’être à jour dans ses vaccinations « universelles » : diphtérie, tétanos, polio, coqueluche, rougeole, oreillons, hépatite B.", descriptionIconWeather: "Le climat y est subtropical humide, c’est-à-dire que les étés sont chauds et pluvieux, les hivers en général assez courts et frais.", description: "Sydney, installée sur une superbe baie, est la plus ancienne ville d’Australie et un port important. Fondée à la fin du XIXe siècle par les colons européens, elle est aujourd’hui la ville la plus peuplée du pays. Sydney a réussi le pari d’entrer d’un bond dans le XXIe siècle tout en gardant un charme ancien.")
-    //    ]
     var arrayDetail = DescriptionIcon(descriptionIconHealth: "L'Organisation mondiale de la santé considère que le Japon possède un niveau sanitaire équivalant à celui de l'Europe de l'Ouest.", descriptionIconCost: "Le taux de change favorable aux Européens, le développement de formules d'hébergement bon marché, les forfaits et les passes pour les transports ont ouvert le Japon aux voyageurs à petit budget.", descriptionIconSecurity: "Le Japon est sans doute le pays le plus sûr du monde. La criminalité, en baisse constante, figure parmi les plus faibles du monde ! C’est aussi le pays le plus organisé, celui où les dangers semblent ne pas exister du fait de l'homme mais bien du fait de la nature ou des modifications apportées à celle-ci par l’homme.", descriptionIconWeather: "Le climat est doux au printemps, chaud et humide en été, pluvieux à l'automne, et froid et sec en hiver. Mais attention, il varie beaucoup selon la latidude, à quoi s'ajoutent des contrastes d'altitude, car le pays est montagneux.")
     //Variables des boutons icones
     @State var buttonIcons: Int = 4
@@ -50,10 +47,6 @@ struct DetailInformation: View {
                 }.font(.title)
                     .bold()
                     .foregroundColor(Color("MyOrange"))
-                //                Image("lola")
-                //                    .resizable()
-                //                    .frame(width: 100, height: 100)
-                //                    .padding(.leading, 250)
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
@@ -176,20 +169,16 @@ struct DetailInformation: View {
             VStack {
                 if buttonIcons == 0 {
                     Text(arrayDetail.descriptionIconSecurity)
-                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 10)
                         .background(Color("MyOrange"))
                         .foregroundColor(.white)
                         .cornerRadius(20)
                         .overlay {
                             HStack {
                                 VStack {
-                                    //                                    Circle()
-                                    //                                        .frame(width: 10)
-                                    //                                        .foregroundColor(.green)
-                                    //                                        .padding([.leading, .top], 10)
                                     Spacer()
                                 }
-                                
                                 Spacer()
                             }
                         }
@@ -202,16 +191,9 @@ struct DetailInformation: View {
                         .overlay {
                             HStack {
                                 VStack {
-                                    //                                    Circle()
-                                    //                                        .frame(width: 10)
-                                    //                                        .foregroundColor(.green)
-                                    //                                        .padding([.leading, .top], 10)
                                     Spacer()
                                 }
-                                
                                 Spacer()
-                                
-                                
                             }
                         }
                 } else if buttonIcons == 2 {
@@ -223,16 +205,9 @@ struct DetailInformation: View {
                         .overlay {
                             HStack {
                                 VStack {
-                                    //                                    Circle()
-                                    //                                        .frame(width: 10)
-                                    //                                        .foregroundColor(.green)
-                                    //                                        .padding([.leading, .top], 10)
                                     Spacer()
                                 }
-                                
                                 Spacer()
-                                
-                                
                             }
                         }
                 } else if buttonIcons == 3 {
@@ -244,10 +219,6 @@ struct DetailInformation: View {
                         .overlay {
                             HStack {
                                 VStack {
-                                    //                                    Circle()
-                                    //                                        .frame(width: 10)
-                                    //                                        .foregroundColor(.green)
-                                    //                                        .padding([.leading, .top], 10)
                                     Spacer()
                                 }
                                 Spacer()

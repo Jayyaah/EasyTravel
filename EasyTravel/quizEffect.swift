@@ -26,6 +26,7 @@ struct IsClicQuiz: View {
                     self.buttonSelected = button
                 }) {
                     Text("\(self.buttons[button])")
+                        .frame(maxWidth: 300)
                         .font(.title2)
                         .padding()
                         .foregroundColor(buttonSelected == button ? Color.white : Color.white)
@@ -38,6 +39,7 @@ struct IsClicQuiz: View {
             
             NavigationLink(destination: Quiz1(thirdView: $secondVue), label: {
                 Text("Suivant")
+                    .frame(maxWidth: 300)
                     .font(.title2)
                     .foregroundColor(Color("MyBlue"))
                     .padding(20)

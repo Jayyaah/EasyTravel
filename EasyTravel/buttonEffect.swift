@@ -20,7 +20,7 @@ struct ZoneClickable: View {
         }, label: {
             Text(text)
         })
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: 300)
         .padding()
         .background(changeColor == true ? (Color("MyYellow")) : (Color("MyBlue")))
         .foregroundColor(changeColor == true ? (Color("MyBlue")) : (Color(.white)))
