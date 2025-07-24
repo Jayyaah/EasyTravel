@@ -70,34 +70,44 @@ let arrayVoyages = [
     Voyage2(nom: "Sydney", pays:"Australie", prixDuVoyage: 300, imageDeLaDestination: ["ImageSydney2", "ImageSydney1", "ImageSydney3", "ImageSydney4"], iconDescription: arrayDescriptionIcon, icone_coherence: "gauge.medium", coherenceDesSuggestions: 45, description: "Sydney, installée sur une superbe baie, est la plus ancienne ville d’Australie et un port important. Fondée à la fin du XIXe siècle par les colons européens, elle est aujourd’hui la ville la plus peuplée du pays. Sydney a réussi le pari d’entrer d’un bond dans le XXIe siècle tout en gardant un charme ancien.", logoCompagnyOneWay: "QF", logoCompagnyReturn: "QF", departureOneWay: "CDG·Paris", departureReturn: "SYD·Sidney", arrivalOneWay: "SYD·Sydney", arrivalReturn: "CDG·Paris", compagnyOneWay: "AirFrance", compagnyReturn: "AirFrance", priceVol: 9405, departureHoursOneWay: "14:25", departureHoursReturn: "06:00", arrivalHoursOneWay: "22:30", arrivalHoursReturn: "19:30", urlVol: "https://kay.ac/fE-Kbo", image: "fourSeasons", name: "Four Seasons", location: "199 George Street, Sydney, NSW 2000", priceLocation: 300, numberBedR: 1, numberBathR: 1, url: "https://www.booking.com/Share-5INRO4"),
 ]
 
+import SwiftUI
 
-struct Suggestions: View { // --------debut view-------------
+struct Suggestions: View {
     @Binding var returnToQuizz: Int
-    var body: some View { // --------debut some view-------------
-        
-        
-        //var nbrLabel_SÛR: Int = 100
-        //var nbrLabel_MOYEN: Int = 50
-        //var nbrLabel_Pas_SÛR: Int = 25
-        
-        
-        //-----------------------/Users/apprenant84/Downloads/Detail.swift-----------
-        
-        
+    let dateDepart: Date
+    let dateRetour: Date
+    
+    // 🔧 Formatage des dates avec une computed property
+    var dateDepartString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E. dd/MM"
+        formatter.locale = Locale(identifier: "fr_FR")
+        return formatter.string(from: dateDepart)
+    }
+    
+    var dateRetourString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E. dd/MM"
+        formatter.locale = Locale(identifier: "fr_FR")
+        return formatter.string(from: dateRetour)
+    }
+    
+    var body: some View {
         NavigationView {
-            ScrollView { // --------debut scrollview-------------
+            ScrollView {
                 VStack {
-                    HStack(spacing:100){
-                        
-                        Text("Ven. 16/12")
+                    // 📅 Affichage dynamique des dates
+                    HStack(spacing: 50) {
+                        Text(dateDepartString)
                         Text("Au")
-                        Text("ven. 23/12")
-                        
-                    }.bold()
+                        Text(dateRetourString)
+                    }
+                    .bold()
+                    
                     Spacer()
                     
-                    ForEach(arrayVoyages){ destination in
-                        
+                    // 🧭 Boucle sur les suggestions
+                    ForEach(arrayVoyages) { destination in
                         HStack {
                             Text(destination.nom)
                                 .foregroundColor(.orange)
@@ -106,44 +116,28 @@ struct Suggestions: View { // --------debut view-------------
                             
                             Spacer()
                             
-                            Text("Prix à partir de \(destination.prixDuVoyage, specifier:"%.0f") €").bold()
-                            
-                        }.padding()
+                            Text("Prix à partir de \(destination.prixDuVoyage, specifier: "%.0f") €")
+                                .bold()
+                        }
+                        .padding()
+                        
                         Image(destination.imageDeLaDestination[0])
                             .resizable()
-                            .frame(width:340, height: 240)
+                            .frame(width: 340, height: 240)
                             .border(Color.gray, width: 2)
-                        Spacer()
-                            .frame(height:20)
                         
-                        //----------debut partie icon signalisation----------
-                        VStack (alignment: .leading) {
-                            HStack{
-                                VStack {
-                                    Image(systemName: "circle.fill")
-                                        .foregroundColor(destination.iconDescription[0].color)
-                                    Text(destination.iconDescription[0].name)
-                                        .font(.footnote)
-                                    
-                                }
-                                VStack {
-                                    Image(systemName: "circle.fill")
-                                        .foregroundColor(destination.iconDescription[1].color)
-                                    Text(destination.iconDescription[1].name)
-                                        .font(.footnote)
-                                }
-                                VStack {
-                                    Image(systemName: "circle.fill")
-                                        .foregroundColor(destination.iconDescription[2].color)
-                                    Text(destination.iconDescription[2].name)
-                                        .font(.footnote)
-                                }
-                                VStack {
-                                    Image(systemName: "circle.fill")
-                                        .foregroundColor(destination.iconDescription[3].color)
-                                    Text(destination.iconDescription[3].name)
-                                        .font(.footnote)
-                                    
+                        Spacer().frame(height: 20)
+                        
+                        // 🛑 Icônes et descriptions
+                        VStack(alignment: .leading) {
+                            HStack {
+                                ForEach(0..<4) { index in
+                                    VStack {
+                                        Image(systemName: "circle.fill")
+                                            .foregroundColor(destination.iconDescription[index].color)
+                                        Text(destination.iconDescription[index].name)
+                                            .font(.footnote)
+                                    }
                                 }
                                 
                                 VStack {
@@ -152,38 +146,28 @@ struct Suggestions: View { // --------debut view-------------
                                         .font(.title)
                                     Text("\(destination.coherenceDesSuggestions)%")
                                         .font(.footnote)
-                                    
                                 }
                                 
                                 Spacer()
                                 
-                                NavigationLink(
-                                    destination: Detail(selectedVoyage: destination),
-                                    
-                                    label: {
-                                        HStack {
-                                            
-                                            Text("Détails")
-                                            
-                                                .foregroundColor(.white)
-                                                .padding(10)
-                                                .font(.system(size: 14))
-                                                .background(Color("MyBlue"))
-                                                .cornerRadius(100)
-                                        }
-                                        
-                                    })
-                                
+                                NavigationLink(destination: Detail(selectedVoyage: destination)) {
+                                    HStack {
+                                        Text("Détails")
+                                            .foregroundColor(.white)
+                                            .padding(10)
+                                            .font(.system(size: 14))
+                                            .background(Color("MyBlue"))
+                                            .cornerRadius(100)
+                                    }
+                                }
                             }
-                            Spacer()
-                                .frame(height:40)
-                            
-                        }//----------fin partie icon signalisation----------
+                            Spacer().frame(height: 40)
+                        }
                         .padding()
-                        
-                        
                     }
-                    Button{
+                    
+                    // 🔁 Bouton pour revenir au quizz
+                    Button {
                         returnToQuizz = 0
                     } label: {
                         Text("Modifier mes réponses")
@@ -192,24 +176,22 @@ struct Suggestions: View { // --------debut view-------------
                             .background(Color("MyOrange"))
                             .cornerRadius(100)
                     }
-                } // --------fin scrollview-------------
-                
+                }
             }
             .padding(2)
             .navigationTitle("Suggestions")
-            
-        }   // ---------fin navigation----------
-        
-        
-    } // --------fin some view-------------
-    
-    struct example_Previews: PreviewProvider {
-        static var previews: some View {
-            Suggestions(returnToQuizz: .constant(0))
-            
-            
-            
-            
         }
     }
 }
+
+
+struct Suggestions_Previews: PreviewProvider {
+    static var previews: some View {
+        Suggestions(
+            returnToQuizz: .constant(0),
+            dateDepart: Date(),
+            dateRetour: Calendar.current.date(byAdding: .day, value: 7, to: Date())!
+        )
+    }
+}
+

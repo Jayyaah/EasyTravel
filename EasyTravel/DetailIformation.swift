@@ -232,7 +232,7 @@ struct DetailInformation: View {
             // VStack description sur la destination
             VStack(alignment: .leading) {
                 Text(selectedVoyage.description)
-                
+                    .multilineTextAlignment(.leading)
             }.padding(.horizontal, 10)
         }
         .onTapGesture {

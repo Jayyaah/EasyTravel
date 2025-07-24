@@ -9,16 +9,20 @@ import SwiftUI
 
 struct ProjetVoyageAppMobile: View {
     @Binding var firstVue: Int
+    @Binding var dateDepart: Date
+    @Binding var dateRetour: Date
+    
     var body: some View {
-        NavigationView{///tout ce qui est à l'interieur est naviguable
+        NavigationView {
             ZStack {
-                VStack{
-                    //                    Spacer()
+                VStack {
                     Image("LOGO")
                         .resizable()
                         .frame(width: 100, height: 100)
                         .padding()
+                    
                     Spacer()
+                    
                     Text("Choississez une aventure")
                         .bold(true)
                         .font(.title)
@@ -30,9 +34,9 @@ struct ProjetVoyageAppMobile: View {
                                 textQuestion: "Quel est ton délire ?",
                                 textReponse: ["Urbain", "Bataille de neige", "Randonnée"]
                             ) {
-                                // destination après "Suivant" dans IsClicQuiz
                                 Quiz1(thirdView: $firstVue)
-                            }, label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
+                            },
+                            label: {
                                 Text("Suprenez-moi")
                                     .frame(maxWidth: 300)
                                     .font(.title2)
@@ -42,54 +46,64 @@ struct ProjetVoyageAppMobile: View {
                                     .cornerRadius(10)
                             })
                         
-                        NavigationLink(destination: Jemaitrise(returnToSuggestion: $firstVue), label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
-                            Text("Je maîtrise")
-                                .frame(maxWidth: 300)
-                                .font(.title2)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color("MyBlue"))
-                                .cornerRadius(10)
-                        })
-                        
+                        NavigationLink(
+                            destination: Jemaitrise(
+                                returnToSuggestion: $firstVue,
+                                dateDepart: $dateDepart,
+                                dateRetour: $dateRetour
+                            ),
+                            label: {
+                                Text("Je maîtrise")
+                                    .frame(maxWidth: 300)
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color("MyBlue"))
+                                    .cornerRadius(10)
+                            })
                     }
+                    
                     Spacer()
                     Spacer()
                     Spacer()
                 }
             }
-        }//fin NavView
+        }
     }
 }
 
+
 struct Jemaitrise: View {
-    @State var toto = 0
-    @State var color = Color.white
-    @State private var showDatePicker = false // Pour le picker Date
-    @State private var selectedDate = Date() //Pour la date selectionnée
+    @Binding var returnToSuggestion: Int
+    @Binding var dateDepart: Date
+    @Binding var dateRetour: Date
+    
+    @State private var showDatePicker = false
+    @State private var selectedDate = Date()
     @State private var selectedPeople = 1
-    let peopleOptions = Array(1...20) // selection du nombre de personnes allant de 1 à 20 personnes
+    let peopleOptions = Array(1...20)
     @State private var selectedCountry = "Europe"
     let countries = ["Amérique", "Europe", "Asie", "Afrique", "Océanie"]
     @State private var selectedHome = "Hôtel"
     let homes = ["Hôtel", "Maison", "Villa", "Appartement","Camping"]
     @State private var selectedBudget = 500
     let budgetOptions = Array(500...2000)
-    @Binding var returnToSuggestion: Int
     
     var body: some View {
-        VStack{
+        VStack {
             Image("LOGO")
                 .resizable()
                 .frame(width: 100, height: 100)
             
             Text("Selectionnez vos dates de voyage")
+            
             HStack {
                 ZoneClickable(text: selectedDate.formatted(date: .abbreviated, time: .omitted)) {
                     withAnimation {
                         showDatePicker.toggle()
                     }
                 }
+                
                 Menu {
                     Picker("Nombre de personnes", selection: $selectedPeople) {
                         ForEach(peopleOptions, id: \.self) { number in
@@ -115,8 +129,8 @@ struct Jemaitrise: View {
                 .padding(.horizontal)
             }
             
-            Text("Selectionnez le lieu de votre sejour")//permettre la selection de pays dans une liste
-            HStack{
+            Text("Selectionnez le lieu de votre séjour")
+            HStack {
                 Menu {
                     Picker("Destination", selection: $selectedCountry) {
                         ForEach(countries, id: \.self) { country in
@@ -128,8 +142,8 @@ struct Jemaitrise: View {
                 }
             }
             
-            Text("Selectionnez le lieu de votre residence")//faire un two-way Binding : qui me permet d'envoyer une info et de la récupérer visuellement. ici récupérer des chiffres
-            HStack{
+            Text("Selectionnez le lieu de votre résidence")
+            HStack {
                 Menu {
                     Picker("Home", selection: $selectedHome) {
                         ForEach(homes, id: \.self) { home in
@@ -142,7 +156,7 @@ struct Jemaitrise: View {
             }
             
             Text("Quel est votre budget ?")
-            HStack{
+            HStack {
                 Menu {
                     Picker("Budget", selection: $selectedBudget) {
                         ForEach(budgetOptions, id: \.self) { number in
@@ -152,12 +166,14 @@ struct Jemaitrise: View {
                 } label: {
                     ZoneClickable(text: "\(selectedBudget) €")
                 }
-                
             }
             .padding(9)
             
             Button {
-                returnToSuggestion = 1 // redirige vers Suggestions
+                // 🧠 Sauvegarde des dates pour Suggestions
+                dateDepart = selectedDate
+                dateRetour = Calendar.current.date(byAdding: .day, value: 7, to: selectedDate)! // ou autre logique
+                returnToSuggestion = 1
             } label: {
                 Text("C’est parti !")
                     .frame(maxWidth: 300)
@@ -171,6 +187,7 @@ struct Jemaitrise: View {
         .navigationTitle("Je maîtrise !")
     }
 }
+
 
 
 
@@ -276,7 +293,11 @@ struct Quiz3: View {
 
 struct ProjetVoyageAppMobile_Previews: PreviewProvider {
     static var previews: some View {
-        ProjetVoyageAppMobile(firstVue: .constant(0))
+        ProjetVoyageAppMobile(
+            firstVue: .constant(0),
+            dateDepart: .constant(Date()),
+            dateRetour: .constant(Calendar.current.date(byAdding: .day, value: 7, to: Date())!)
+        )
     }
 }
 
