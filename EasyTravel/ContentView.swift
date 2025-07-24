@@ -15,9 +15,6 @@ struct ContentView: View {
                 ProjetVoyageAppMobile(firstVue: $changeView)
             } else {
                 TabView {
-                    
-                    //                        .tabItem {
-                    //                            Label("Quizz", systemImage: "checklist.checked")}
                     Suggestions(returnToQuizz: $changeView)
                         .tabItem {
                             Label("Suggestions", systemImage: "tray.and.arrow.down.fill")}
@@ -30,9 +27,6 @@ struct ContentView: View {
                 }.accentColor(.orange) // Fin TabView
             }
         }
-        
-        
-        //    .padding()
     }
 }
 

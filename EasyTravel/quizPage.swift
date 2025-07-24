@@ -24,14 +24,21 @@ struct ProjetVoyageAppMobile: View {
                         .padding(30)
                     //                    Spacer()
                     VStack(spacing: 40) {
-                        NavigationLink(destination: IsClicQuiz( secondVue: $firstVue), label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
-                            Text("Suprenez-moi")
-                                .frame(maxWidth: 300)
-                                .foregroundColor(Color("MyBlue"))
-                                .padding(35)
-                                .background(Color("MyYellow"))
-                                .cornerRadius(10)
-                        })
+                        NavigationLink(
+                            destination: IsClicQuizNavigation(
+                                textQuestion: "Quel est ton délire ?",
+                                textReponse: ["Urbain", "Bataille de neige", "Randonnée"]
+                            ) {
+                                // destination après "Suivant" dans IsClicQuiz
+                                Quiz1(thirdView: $firstVue)
+                            }, label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
+                                Text("Suprenez-moi")
+                                    .frame(maxWidth: 300)
+                                    .foregroundColor(Color("MyBlue"))
+                                    .padding(35)
+                                    .background(Color("MyYellow"))
+                                    .cornerRadius(10)
+                            })
                         
                         NavigationLink(destination: Jemaitrise(), label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
                             Text("Je maîtrise")
@@ -159,124 +166,102 @@ struct Jemaitrise: View {
 
 
 struct Quiz1: View {
-    
-    let buttons = ["Amérique", "Europe", "Le monde entier"]
-    
-    @State public var buttonSelected: Int?
-    @State private var changeColor: Bool = false
     @Binding var thirdView: Int
+    
     var body: some View {
-        VStack(spacing : 50){
-            Text("Où veux-tu chiller ?")
-                .font(.largeTitle)
-                .padding(.bottom, 50)
-            ForEach(0..<buttons.count, id:\.self) { button in
-                Button(action: {
-                    self.buttonSelected = button
-                }) {
-                    Text("\(self.buttons[button])")
-                        .font(.title2)
-                        .padding()
-                        .foregroundColor(buttonSelected == button ? Color.white : Color.white)
-                        .background(buttonSelected == button ? Color("MyOrange"): Color("MyBlue") )
-                        .clipShape(Capsule())
-                }
-                .navigationTitle("Surprenez-moi !")
-            }
-            NavigationLink(destination: Quiz2(fourthView: $thirdView), label: {
-                Text("Suivant")
-                    .font(.title2)
-                    .foregroundColor(Color("MyBlue"))
-                    .padding(20)
-                    .background(Color("MyYellow"))
-                    .cornerRadius(20)
-                    .clipShape(Capsule())
-            })
+        IsClicQuizNavigation(
+            textQuestion: "Où veux-tu chiller ?",
+            textReponse: ["Amérique", "Europe", "Asie"]
+        ) {
+            Quiz2(fourthView: $thirdView)
         }
-        
     }
 }
 
-struct Quiz2: View{
-    let buttons = ["Sélectionne ta date "]
-    
-    @State public var buttonSelected: Int?
-    @State private var changeColor: Bool = false
+
+struct Quiz2: View {
     @Binding var fourthView: Int
+
+    @State private var departDate = Date()
+    @State private var retourDate = Date()
+    @State private var showAlert = false
+    @State private var navigate = false
+
     var body: some View {
-        VStack(spacing : 50){
+        Spacer()
+        VStack(spacing: 40) {
             Text("Quand veux-tu partir ?")
                 .font(.largeTitle)
-                .padding(.horizontal)
-                .font(.largeTitle)
-                .padding(.bottom, 50)
-            
-            ForEach(0..<buttons.count, id:\.self) { button in
-                Button(action: {
-                    self.buttonSelected = button
-                }) {
-                    Text("\(self.buttons[button])")
-                        .padding()
-                        .foregroundColor(buttonSelected == button ? Color.black : Color.black)
-                        .background(buttonSelected == button ? Color.white: Color.white )
-                        .clipShape(Capsule())
-                    
+                .padding(.top)
+
+            VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading) {
+                    Text("Date de départ")
+                        .font(.headline)
+                    DatePicker("Départ", selection: $departDate, displayedComponents: [.date])
+                        .datePickerStyle(.compact)
+                        .labelsHidden()
                 }
-                .navigationTitle("Surprenez-moi !")
-                
-                VStack{
-                    DatePicker(selection: /*@START_MENU_TOKEN@*/.constant(Date())/*@END_MENU_TOKEN@*/, label: { Text("Aller") })
-                    DatePicker(selection: /*@START_MENU_TOKEN@*/.constant(Date())/*@END_MENU_TOKEN@*/, label: { Text("Retour") })
-                }.padding()
-                
+
+                VStack(alignment: .leading) {
+                    Text("Date de retour")
+                        .font(.headline)
+                    DatePicker("Retour", selection: $retourDate, in: departDate..., displayedComponents: [.date])
+                        .datePickerStyle(.compact)
+                        .labelsHidden()
+                }
             }
-            NavigationLink(destination: Quiz3(fifthView: $fourthView), label: {
+            .padding(.horizontal)
+            Spacer()
+            NavigationLink(destination: Quiz3(fifthView: $fourthView), isActive: $navigate) {
+                EmptyView()
+            }
+
+            Button(action: {
+                if retourDate < departDate {
+                    showAlert = true
+                } else {
+                    navigate = true
+                }
+            }) {
                 Text("Suivant")
+                    .frame(maxWidth: 300)
                     .font(.title2)
                     .foregroundColor(Color("MyBlue"))
                     .padding(20)
                     .background(Color("MyYellow"))
-                    .clipShape(Capsule())
-            })
+                    .cornerRadius(10)
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Date invalide"),
+                    message: Text("La date de retour ne peut pas être avant la date de départ."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+            Spacer()
         }
+        .padding()
+        .navigationTitle("Surprenez-moi !")
     }
 }
 
 struct Quiz3: View {
-    let buttons = ["-1000€", "-3000€", "+5000€"]
-    
-    @State public var buttonSelected: Int?
-    @State private var changeColor: Bool = false
     @Binding var fifthView: Int
+
     var body: some View {
-        VStack(spacing : 50){
-            Text("Combien tu as ?")
-                .font(.largeTitle)
-                .padding(.bottom, 50)
-            ForEach(0..<buttons.count, id:\.self) { button in
-                Button(action: {
-                    self.buttonSelected = button
-                }) {
-                    Text("\(self.buttons[button])")
-                        .font(.title2)
-                        .padding()
-                        .foregroundColor(buttonSelected == button ? Color.white : Color.white)
-                        .background(buttonSelected == button ? Color("MyOrange"): Color("MyBlue") )
-                        .clipShape(Capsule())
+        VStack(spacing: 50) {
+            IsClicQuizAction(
+                textQuestion: "Quel est ton budget ?",
+                textReponse: ["- de 1000€", "- de 3000€", "+ de 5000€"],
+                onValidate: {
+                    fifthView = 1
                 }
-                .navigationTitle("Surprenez-moi !")
-            }
-            Button("C'est parti !", action: {
-                fifthView = 1
-            })
-            .font(.title2)
-            .foregroundColor(Color("MyBlue"))
-            .padding(20)
-            .background(Color("MyYellow"))
-            .clipShape(Capsule())
+            )
         }
     }
 }
+
 
 struct ProjetVoyageAppMobile_Previews: PreviewProvider {
     static var previews: some View {

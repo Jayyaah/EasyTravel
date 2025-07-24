@@ -7,51 +7,114 @@
 
 import SwiftUI
 //surprenez moi
-struct IsClicQuiz: View {
-    let buttons = ["Urbain", "Bataille de neige", "Randonnée"]//quiz1
-    
-    @State public var buttonSelected: Int?
-    @State private var changeColor: Bool = false
-    @Binding var secondVue: Int
-    
+struct IsClicQuizNavigation<Destination: View>: View {
+    var textQuestion: String
+    var textReponse: [String]
+    var destination: () -> Destination
+
+    @State private var buttonSelected: Int?
+
     var body: some View {
-        VStack(spacing : 50){
-            Text("Quel est ton délire ?")
+        VStack(spacing: 50) {
+            Text(textQuestion)
                 .font(.largeTitle)
                 .padding(.bottom, 50)
-            ForEach(0..<buttons.count, id:\.self) { button in
+
+            ForEach(0..<textReponse.count, id: \.self) { index in
                 Button(action: {
-                    self.buttonSelected = button
+                    buttonSelected = index
                 }) {
-                    Text("\(self.buttons[button])")
-                        .frame(maxWidth: 300, maxHeight: 20)
+                    Text(textReponse[index])
+                        .frame(maxWidth: 300)
                         .font(.title2)
                         .padding()
-                        .foregroundColor(buttonSelected == button ? Color.white : Color.white)
-                        .background(buttonSelected == button ? Color("MyOrange"): Color("MyBlue")  )
+                        .foregroundColor(.white)
+                        .background(buttonSelected == index ? Color("MyOrange") : Color("MyBlue"))
                         .cornerRadius(10)
-                    
                 }
-                
             }
-            
-            NavigationLink(destination: Quiz1(thirdView: $secondVue), label: {
+
+            NavigationLink(destination: destination()) {
                 Text("Suivant")
-                    .frame(maxWidth: 300, maxHeight: 20)
+                    .frame(maxWidth: 300)
                     .font(.title2)
                     .foregroundColor(Color("MyBlue"))
-                    .padding(20)
+                    .padding()
                     .background(Color("MyYellow"))
                     .cornerRadius(10)
-            })
-            .navigationTitle("Surprenez-moi !")
+            }
+            .disabled(buttonSelected == nil)
+            .opacity(buttonSelected == nil ? 0 : 1)
+            .animation(.easeInOut, value: buttonSelected)
         }
+        .navigationTitle("Surprenez-moi !")
     }
 }
+
+
+struct IsClicQuizAction: View {
+    var textQuestion: String
+    var textReponse: [String]
+    var onValidate: () -> Void
+
+    @State private var buttonSelected: Int?
+
+    var body: some View {
+        VStack(spacing: 50) {
+            Text(textQuestion)
+                .font(.largeTitle)
+                .padding(.bottom, 50)
+
+            ForEach(0..<textReponse.count, id: \.self) { index in
+                Button(action: {
+                    buttonSelected = index
+                }) {
+                    Text(textReponse[index])
+                        .frame(maxWidth: 300)
+                        .font(.title2)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(buttonSelected == index ? Color("MyOrange") : Color("MyBlue"))
+                        .cornerRadius(10)
+                }
+            }
+
+            Button(action: onValidate) {
+                Text("Suivant")
+                    .frame(maxWidth: 300)
+                    .font(.title2)
+                    .foregroundColor(Color("MyBlue"))
+                    .padding()
+                    .background(Color("MyYellow"))
+                    .cornerRadius(10)
+            }
+            .disabled(buttonSelected == nil)
+            .opacity(buttonSelected == nil ? 0 : 1)
+            .animation(.easeInOut, value: buttonSelected)
+        }
+        .navigationTitle("Surprenez-moi !")
+    }
+}
+
+
+
 
 struct IsClicQuiz_Previews: PreviewProvider {
+    struct PreviewWrapper: View {
+        @State private var dummy = 0
+
+        var body: some View {
+            IsClicQuizNavigation(
+                textQuestion: "Quel est ton délire ?",
+                textReponse: ["Urbain", "Neige", "Randonnée"],
+                destination: {
+                    Quiz1(thirdView: $dummy)
+                }
+            )
+        }
+    }
+
     static var previews: some View {
-        IsClicQuiz(secondVue: .constant(0))
+        PreviewWrapper()
     }
 }
-
