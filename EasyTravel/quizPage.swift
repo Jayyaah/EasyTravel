@@ -213,10 +213,9 @@ struct Quiz2: View {
             }
             .padding(.horizontal)
             Spacer()
-            NavigationLink(destination: Quiz3(fifthView: $fourthView), isActive: $navigate) {
-                EmptyView()
+            NavigationStack {
+                Quiz2(fourthView: $fourthView)
             }
-
             Button(action: {
                 if retourDate < departDate {
                     showAlert = true
