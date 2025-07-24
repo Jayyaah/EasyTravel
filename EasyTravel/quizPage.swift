@@ -18,11 +18,12 @@ struct ProjetVoyageAppMobile: View {
                         .resizable()
                         .frame(width: 100, height: 100)
                         .padding()
+                    Spacer()
                     Text("Choississez une aventure")
                         .bold(true)
                         .font(.title)
                         .padding(30)
-                    //                    Spacer()
+                    
                     VStack(spacing: 40) {
                         NavigationLink(
                             destination: IsClicQuizNavigation(
@@ -34,29 +35,28 @@ struct ProjetVoyageAppMobile: View {
                             }, label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
                                 Text("Suprenez-moi")
                                     .frame(maxWidth: 300)
-                                    .foregroundColor(Color("MyBlue"))
-                                    .padding(35)
+                                    .font(.title2)
+                                    .foregroundColor(.black)
+                                    .padding()
                                     .background(Color("MyYellow"))
                                     .cornerRadius(10)
                             })
                         
-                        NavigationLink(destination: Jemaitrise(), label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
+                        NavigationLink(destination: Jemaitrise(returnToSuggestion: $firstVue), label: {///le navigationLink est pour la redirection / le button = action exemple :  changement de couleur, chrono, addition.....
                             Text("Je maîtrise")
                                 .frame(maxWidth: 300)
+                                .font(.title2)
                                 .foregroundColor(.white)
-                                .padding(35)
+                                .padding()
                                 .background(Color("MyBlue"))
                                 .cornerRadius(10)
                         })
+                        
                     }
-                    
                     Spacer()
-                    
+                    Spacer()
+                    Spacer()
                 }
-                Image("JeromeNew")
-                    .resizable()
-                    .offset(x:60 ,y:260)
-                    .frame(width:270 , height:370 )
             }
         }//fin NavView
     }
@@ -75,6 +75,7 @@ struct Jemaitrise: View {
     let homes = ["Hôtel", "Maison", "Villa", "Appartement","Camping"]
     @State private var selectedBudget = 500
     let budgetOptions = Array(500...2000)
+    @Binding var returnToSuggestion: Int
     
     var body: some View {
         VStack{
@@ -155,9 +156,17 @@ struct Jemaitrise: View {
             }
             .padding(9)
             
-            
-            ZoneClickable(text: "Cest parti !")
-                .colorInvert()
+            Button {
+                returnToSuggestion = 1 // redirige vers Suggestions
+            } label: {
+                Text("C’est parti !")
+                    .frame(maxWidth: 300)
+                    .font(.title2)
+                    .foregroundColor(Color("MyBlue"))
+                    .padding()
+                    .background(Color("MyYellow"))
+                    .cornerRadius(10)
+            }
         }
         .navigationTitle("Je maîtrise !")
     }
@@ -181,19 +190,18 @@ struct Quiz1: View {
 
 struct Quiz2: View {
     @Binding var fourthView: Int
-
+    
     @State private var departDate = Date()
     @State private var retourDate = Date()
     @State private var showAlert = false
     @State private var navigate = false
-
+    
     var body: some View {
-        Spacer()
         VStack(spacing: 40) {
             Text("Quand veux-tu partir ?")
                 .font(.largeTitle)
                 .padding(.top)
-
+            
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading) {
                     Text("Date de départ")
@@ -202,7 +210,7 @@ struct Quiz2: View {
                         .datePickerStyle(.compact)
                         .labelsHidden()
                 }
-
+                
                 VStack(alignment: .leading) {
                     Text("Date de retour")
                         .font(.headline)
@@ -212,10 +220,9 @@ struct Quiz2: View {
                 }
             }
             .padding(.horizontal)
+            
             Spacer()
-            NavigationStack {
-                Quiz2(fourthView: $fourthView)
-            }
+            
             Button(action: {
                 if retourDate < departDate {
                     showAlert = true
@@ -238,16 +245,21 @@ struct Quiz2: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
+            
             Spacer()
         }
         .padding()
         .navigationTitle("Surprenez-moi !")
+        .navigationDestination(isPresented: $navigate) {
+            Quiz3(fifthView: $fourthView)
+        }
     }
 }
 
+
 struct Quiz3: View {
     @Binding var fifthView: Int
-
+    
     var body: some View {
         VStack(spacing: 50) {
             IsClicQuizAction(
